@@ -2,7 +2,8 @@ import 'dart:ui';
 
 //const colorPrimary = Color(0xff990000);
 const appBarColor = Color(0xff89000a);
-const btnColor = Color(0xff89000a);
+const btnColor = Color(0xFF5D0000);
+// const btnColor = Color(0xff89000a);
 const textColor = Color(0xff990000);
 //const redColor1 = Color(0xffffe6e6);
 //const redColor1 = Color(0xffFDE7E7);

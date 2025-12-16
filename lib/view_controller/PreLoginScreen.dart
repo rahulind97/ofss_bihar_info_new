@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ofss_bihar_info/view_controller/LoginScreen.dart';
+import '../constants/Colors.dart';
 import 'CollegeInformation.dart';
 
 class PreLoginScreen extends StatefulWidget {
@@ -32,7 +34,7 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
                 // Logo
                 Center(
                   child: Image.asset(
-                    "assets/logo.png",
+                    "assets/app_logo.png",
                     height: 170,
                     width: 170,
                   ),
@@ -44,7 +46,7 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
                   "ONLINE FACILITATION SYSTEM\nFOR STUDENTS",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     height: 1.3,
@@ -57,7 +59,7 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
                   "Bihar School Examination Board, Govt. of Bihar",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 13,
                     color: Colors.white,
                   ),
                 ),
@@ -68,7 +70,7 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
                   "Not Login Yet ?",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 23,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -79,24 +81,30 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
                   "Login New with Registration No.",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
 
                 const SizedBox(height: 35),
 
                 SizedBox(
-                  width: 180,
+                  width: 150,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      foregroundColor: btnColor,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                      );
+
+                    },
                     child: const Text(
                       "Login",
                       style: TextStyle(
@@ -136,17 +144,17 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                color: Colors.red.shade900,
+                color: btnColor,
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.account_balance, color: Colors.white, size: 30),
+                    Icon(Icons.info, color: Colors.white, size: 30),
                     SizedBox(width: 12),
                     Text(
                       "College Information",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -161,75 +169,3 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
   }
 }
 
-// ------------------------------------------------------------------------------------------
-// CUSTOM WIDGETS
-// ------------------------------------------------------------------------------------------
-
-// Dropdown UI
-Widget _dropdownField({required String label}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
-      ),
-      const SizedBox(height: 8),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Colors.white60, width: 1.4),
-          ),
-        ),
-        child: Row(
-          children: const [
-            Expanded(
-              child: Text(
-                "",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-            Icon(Icons.keyboard_arrow_down, color: Colors.white),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
-// Search textfield
-Widget _searchField() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        "Type College Name",
-        style: TextStyle(color: Colors.white, fontSize: 16),
-      ),
-      const SizedBox(height: 8),
-      Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Colors.white60, width: 1.4),
-          ),
-        ),
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Row(
-          children: const [
-            Expanded(
-              child: TextField(
-                cursorColor: Colors.white,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            Icon(Icons.search, color: Colors.white, size: 26),
-          ],
-        ),
-      ),
-    ],
-  );
-}

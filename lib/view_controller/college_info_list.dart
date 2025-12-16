@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ofss_bihar_info/view_controller/seat_strength.dart';
 
@@ -13,9 +14,6 @@ class CollegeInfoList extends StatefulWidget {
   final String myDist, myBlock, myCollege;
 
   CollegeInfoList(this.myDist, this.myBlock, this.myCollege);
-
-//  final List collegeData;
-//  CollegeInfoList( { List collegeData,});
 
   @override
   _CollegeInfoListState createState() => _CollegeInfoListState();
@@ -43,10 +41,8 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
     collegeInfoServ(postdata).then((value) {
       Map result = json.decode(value.body);
       print('###################');
-     // print(result["Get_College_InfoResult"][0]['CollegeName']);
       for (var i = 0; i < result["Get_College_InfoResult"].length; i++) {
           collegeData.add(result["Get_College_InfoResult"][i]);
-//  print(collegeData['CollegeName']);
       }
       setState(() {
         isLoading = false;
@@ -74,10 +70,6 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
       context: context,
       builder: (BuildContext context) {
         Future.delayed(Duration(seconds: 3), () {
-//          Navigator.pushReplacement(
-//            context,
-//            MaterialPageRoute(builder: (context) => LoginPage()),
-//          );
         });
         return alert;
       },
@@ -137,16 +129,6 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
           //replace with our own icon data.
         ),
         actions: [
-          /*  Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Dashboard()));
-              },
-            ),
-          ),*/
         ],
       ),
       body: collegeData.isNotEmpty && !isLoading
@@ -165,7 +147,7 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           gradient: const LinearGradient(
-                            colors: [redColor1, redColor2],
+                            colors: [redColor1, appBarColor],
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
                             stops: [0.8, 0.1],
@@ -190,17 +172,9 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
                               child: IconButton(
                                 icon: Icon(
                                   Icons.arrow_forward_ios,
-                                  color: Colors.black87,
+                                  color: Colors.white,
                                 ),
                                 onPressed: () {
-                                  /* Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SeatStrength(
-                                        name: collegeData[i]['CollegeName'],
-                                        id: collegeData[i]['CollegeID']
-                                    )));*/
-
                                   showModalBottomSheet(
                                     isScrollControlled: true,
                                     constraints: BoxConstraints(
@@ -265,24 +239,6 @@ class _CollegeInfoListState extends State<CollegeInfoList> {
                             Center(
                               child: Image.asset('assets/NoDataFound.png'),
                             )
-                            // Container(
-                            //     height: 120,
-                            //     width: 120,
-                            //     decoration: BoxDecoration(
-                            //       image: DecorationImage(
-                            //         image: AssetImage(
-                            //           'assets/no-wifi.png',
-                            //         ),
-                            //       ),
-                            //       shape: BoxShape.rectangle,
-                            //     )),
-                            // new Text(
-                            //   'No Internet Connection',
-                            //   style: new TextStyle(
-                            //       fontSize: 14.0,
-                            //       color: Colors.grey[700],
-                            //       fontWeight: FontWeight.w500),
-                            // )
                           ]))),
     );
   }

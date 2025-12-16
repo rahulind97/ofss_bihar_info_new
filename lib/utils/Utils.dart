@@ -38,66 +38,48 @@ class Utils {
           ),
     );
   }
+
   static void progressbar(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return WillPopScope(
-          child:SpinKitDoubleBounce(
-            // color: thameColor,
-            size: 50.0,
-          ),
           onWillPop: () async => false,
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: MediaQuery.of(context).size.height / 8,
+              width: MediaQuery.of(context).size.width / 1.6,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SpinKitCircle(
+                    color: btnColor, // your appBarColor
+                    size: 45,
+                  ),
+                  Text(
+                    'Loading...',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
   }
 
-  static String formDataToString(FormData formData) {
-    StringBuffer buffer = StringBuffer();
-
-    for (var entry in formData.fields) {
-      buffer.write('${entry.key}: ${entry.value}\n');
-    }
-
-    return buffer.toString();
-  }
-  // static String utcToLocalTime(String utcTime) {
-  //   try {
-  //     // Append 'Z' if not already present to mark it as UTC
-  //     if (!utcTime.endsWith('Z')) {
-  //       utcTime = '${utcTime}Z';
-  //     }
-  //     DateTime utcDateTime = DateTime.parse(utcTime).toUtc();
-  //     DateTime localDateTime = utcDateTime.toLocal();
-  //
-  //     final timeFormat = DateFormat('hh:mm a');
-  //     return timeFormat.format(localDateTime);
-  //   } catch (e) {
-  //     print('Error parsing time: $e');
-  //     return '';
-  //   }
-  // }
-
-  static int getIdBySubName(String jsonResponse, String subName) {
-    final decodedResponse = json.decode(jsonResponse);
-
-    if (decodedResponse['data'] != null &&
-        decodedResponse['data']['data'] != null &&
-        decodedResponse['data']['data']['PacketInBankClasswise'] != null) {
-      final packetInBankClasswise = decodedResponse['data']['data']['PacketInBankClasswise'];
-
-      for (var packet in packetInBankClasswise) {
-        if (packet['subName'] == subName) {
-          return packet['id'];
-        }
-      }
-    }
-
-    // If the subName is not found, you can return a default value or handle it as needed.
-    return -1; // Return -1 as an example for not found.
-  }
   static void AlertGoToSetting(BuildContext context) {
     showDialog(
         context: context,
@@ -130,29 +112,6 @@ class Utils {
               ],
             ));
   }
-
-  static void PermisionAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(
-              title: Text('Alert'),
-              content: Text(
-                  "To enhance the security and authenticity of student examinations, the app requires access to your location and camera. These permissions are necessary for verifying teacher presence and identity during exams. Please enable both location and camera access to ensure a smooth and secure examination process. You can update these settings in your device's Settings app."),
-              actions: [
-                TextButton(
-                  child:
-                  Text('Close', style: TextStyle(color: Color(0xFF01579B))),
-                  // Negative button
-                  onPressed: () {
-                    // Close the dialog without performing any action
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
-  }
-
 
   static void showAlertDialog(BuildContext context, String title) {
     showDialog(
@@ -250,106 +209,8 @@ class Utils {
     }
     return false;
   }
-  // static String getCurrentFormattedDate() {
-  //   DateTime currentDate = DateTime.now();
-  //   return DateFormat('dd-MM-yyyy').format(currentDate);
-  // }
-
-  static void addAllUniqueClasses(String jsonResponse, List<String> dropdownItemList) {
-    final decodedResponse = json.decode(jsonResponse);
-
-    if (decodedResponse['data'] != null &&
-        decodedResponse['data']['data'] != null &&
-        decodedResponse['data']['data']['PacketInBank'] != null) {
-      final packetInBank = decodedResponse['data']['data']['PacketInBank'];
-
-      for (var packet in packetInBank) {
-        String currentClass = packet['class'];
-        if (!dropdownItemList.contains(currentClass)) {
-          dropdownItemList.add(currentClass);
-        }
-      }
-    }
-  }
-  static String replaceSchoolCodeInJson(String originalJson, String newSchoolCode) {
-    try {
-      // Parse the original JSON string
-      Map<String, dynamic> jsonData = json.decode(originalJson);
-
-      // Replace the "SchoolCode" value with the newSchoolCode
-      jsonData['SchoolCode'] = newSchoolCode;
-
-      // Convert the modified data back to a JSON string
-      String modifiedJson = json.encode(jsonData);
-
-      return modifiedJson;
-    } catch (e) {
-      // Handle JSON parsing errors
-      print("Error parsing or modifying JSON: $e");
-      return originalJson; // Return the original JSON on error
-    }
-  }
   static void printLongString(String text) {
     final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((RegExpMatch match) =>   print(match.group(0)));
   }
-  static int getNoOfBlankSheetFromJsonString(String jsonString, String desiredClass) {
-    final Map<String, dynamic> jsonResponse = jsonDecode(jsonString);
-    final List<dynamic> table = jsonResponse['data']['data']['Table'];
-
-    for (var entry in table) {
-      if (entry['class'] == desiredClass) {
-        return entry['NoOfBlankSheet'];
-      }
-    }
-
-    return 0; // Return a default value if the class is not found
-  }
-
-  static int getNoOfBlankSheetForClass(String responseJson, String targetClass) {
-    Map<String, dynamic> jsonResponse = json.decode(responseJson);
-
-    if (jsonResponse.containsKey('data') && jsonResponse['data'].containsKey('data')) {
-      List<dynamic> tableData = jsonResponse['data']['data']['Table'];
-
-      for (var entry in tableData) {
-        String classs = entry['Class'];
-        int noOfBlankSheet = entry['NoOfBlankSheet'];
-
-        if (classs == targetClass) {
-          return noOfBlankSheet;
-        }
-      }
-    }
-
-    // Return a default value or handle the case when the class is not found
-    return 0;
-  }
-
-
-
-  static String formDataToStringg(FormData formData) {
-    StringBuffer buffer = StringBuffer();
-
-    for (var entry in formData.fields) {
-      buffer.write('${entry.key}: ${entry.value}\n');
-    }
-
-    return buffer.toString();
-  }
-
-  // static Future<String?> getDeviceId() async {
-  //   final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  //
-  //   if (Platform.isAndroid) {
-  //     final androidInfo = await deviceInfo.androidInfo;
-  //     return androidInfo.id; // or use androidInfo.androidId for Android 10+
-  //   } else if (Platform.isIOS) {
-  //     final iosInfo = await deviceInfo.iosInfo;
-  //     return iosInfo.identifierForVendor;
-  //   }
-  //
-  //   return null;
-  // }
-// ... Add more methods for different data types as needed
 }

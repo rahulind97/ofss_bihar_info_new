@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-Login LoginFromJson(String str) => Login.fromJson(json.decode(str));
+Login loginFromJson(String str) => Login.fromJson(json.decode(str));
 
-String LoginToJson(Login data) => json.encode(data.toJson());
+String loginToJson(Login data) => json.encode(data.toJson());
 
 class Login {
   String? mobileNumber;
@@ -18,11 +18,10 @@ class Login {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mobileNumber'] = this.mobileNumber;
-    data['password'] = this.password;
-    data['type'] = this.type;
-    
-    return data;
+    return {
+      'mobileNumber': mobileNumber,
+      'password': password,
+      'type': type,
+    };
   }
 }

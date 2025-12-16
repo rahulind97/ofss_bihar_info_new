@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../constants/Colors.dart';
 import '../model/blockModel.dart';
 import '../services/services.dart';
+import '../utils/ApiInterceptor.dart';
 import 'college_info_list.dart';
 
 class CollegeInfo extends StatefulWidget {
@@ -33,6 +34,7 @@ class _CollegeInfostate extends State<CollegeInfo> {
   String _myDist1 = "";
   String _myBlock1 = "";
   String _myCollege1 = "";
+  final Dio _dio = ApiInterceptor.createDio(); // Use ApiInterceptor to create Dio instance
 
 //This method is used for getting the district list
 
@@ -50,7 +52,7 @@ class _CollegeInfostate extends State<CollegeInfo> {
 
   Future<List<GetBlockResult>> _getBlockList() async {
     try {
-      final response = await Dio().get(URL + 'get_block');
+      final response = await _dio.get(URL + 'get_block');
       final data = response.data;
       _blockList = BlockModel.fromJson(data).getBlockResult!;
       print("Block List >>>>>>>>> ${_blockList[100].blockName}");
@@ -136,10 +138,10 @@ class _CollegeInfostate extends State<CollegeInfo> {
                       height: 30,
                     ),
                     Text(
-                      'College Information',
+                      'Collage Information',
                       style: TextStyle(
                       fontSize: 20,
-                      color: appBarColor,
+                      color: btnColor,
                       fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 5,),
@@ -300,16 +302,10 @@ class _CollegeInfostate extends State<CollegeInfo> {
                       height: 40,
                       width: MediaQuery.of(context).size.width / 1.15,
                       child: ElevatedButton(
-                        // padding: const EdgeInsets.all(8.0),
-                        // textColor: Colors.white,
-                        // color: Colors.red[900],
                         style:
                             ElevatedButton.styleFrom(backgroundColor: btnColor),
                         onPressed: () {
-//                        showprogressBar();
                           if (_myDist == '' || _myDist == null) {
-                            // Constants.instance.displayToastmessage(
-                            //     context, "Please Select District !!");
                           } else {
                             setState(() {
                               _myDist1 = _myDist;
@@ -327,11 +323,6 @@ class _CollegeInfostate extends State<CollegeInfo> {
                               print(" block id is>>" + _myBlock);
                               print(" clg id is>>" + _myCollege);
                             });
-                            // Constants.instance
-                            //     .checkInternetConnectivity()
-                            //     .then((internet) async {
-                            //   if (internet) {
-                            //     Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -342,21 +333,7 @@ class _CollegeInfostate extends State<CollegeInfo> {
                                               : _myBlock1,
                                           _myCollege)),
                                 );
-                        //       } else {
-                        //         print('No internet');
-                        //         Constants.instance.displayToastmessage(context,
-                        //             "You are not connected to internet.Please connect to internet and try again");
-                        //         /* _displaySnackBarError(
-                        //       "You are not connected to internet.Please connect to internet and try again");
-                        // */
-                        //       }
-                        //     });
                           }
-//                        Navigator.push(
-//                          context,
-//                          MaterialPageRoute(
-//                              builder: (context) => CollegeInfoList(result['CollegeName'])),
-//                        );
                         },
                         child: new Text("Search",style: TextStyle(color: Colors.white),),
                       ),
@@ -437,10 +414,7 @@ class _CollegeInfostate extends State<CollegeInfo> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           content: Container(
-            // height: 40.0,
-            // margin: EdgeInsets.all(8.0),
             child: new Row(
-              // mainAxisSize: MainAxisSize.min,
               children: [
                 new CircularProgressIndicator(),
                 SizedBox(

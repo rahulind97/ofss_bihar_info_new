@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ofss_bihar_info/constants/Colors.dart';
 
 import '../services/services.dart';
 
@@ -93,31 +94,11 @@ class _SeatStrengthState extends State<SeatStrength> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: MediaQuery.of(context).size.height / 0.25,
-      // key: _ScaffoldStateKey,
-      /* appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-//            IconButton(
-//              icon: Icon(
-//                Icons.arrow_back,
-//                color: Colors.white,
-//              ),
-//              onPressed: () {},
-//            ),
-            Text('Seat Strength'),
-          ],
-        ),
-        backgroundColor:appBarColor,
-      ),*/
       child: mySeatStrengthData.isNotEmpty
           ? Wrap(
-              // height: MediaQuery.of(context).size.height / 0.25,
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 35.0, bottom: 5),
+                    padding: const EdgeInsets.only(top: 25.0, bottom: 5),
                     child: Center(
                         child: Text(
                       'Seat Strength',
@@ -155,14 +136,14 @@ class _SeatStrengthState extends State<SeatStrength> {
                     color: Colors.white,
                     padding: EdgeInsets.only(top: 20.0, left: 15, right: 15),
                     child: Table(
-                      border: TableBorder.all(color: Color(0xff666666)),
+                      border: TableBorder.all(color: appBarColor),
                       columnWidths: {
                         0: FlexColumnWidth(10),
                         1: FlexColumnWidth(10)
                       },
                       children: [
                         TableRow(
-                            decoration: BoxDecoration(color: Colors.black87),
+                            decoration: BoxDecoration(color: btnColor),
                             children: [
                               Padding(
                                 padding: EdgeInsets.all(
@@ -191,17 +172,16 @@ class _SeatStrengthState extends State<SeatStrength> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 3, bottom: 20.0),
+                    padding: const EdgeInsets.only(top: 0, bottom: 5.0),
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: mySeatStrengthData.length,
                         itemBuilder: (context, int i) => Column(
-//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 new ListTile(
                                   title: Table(
                                     border: TableBorder.all(
-                                        color: Color(0xff666666)),
+                                        color: appBarColor),
                                     columnWidths: {
                                       0: FlexColumnWidth(10),
                                       1: FlexColumnWidth(10)
@@ -209,16 +189,15 @@ class _SeatStrengthState extends State<SeatStrength> {
                                     children: [
                                       TableRow(
                                           decoration: BoxDecoration(
-                                              color: Colors.grey.shade400),
+                                              color: Colors.white),
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.all(
                                                   MediaQuery.of(context)
                                                           .size
                                                           .height /
-                                                      50),
+                                                      70),
                                               child: Text(
-//                                    get_College_SubjectDetailsResult["strStreamName"]
                                                   mySeatStrengthData[i]
                                                       ['strStreamName']),
                                             ),
@@ -227,7 +206,7 @@ class _SeatStrengthState extends State<SeatStrength> {
                                                   MediaQuery.of(context)
                                                           .size
                                                           .height /
-                                                      50),
+                                                      70),
                                               child: Text(
                                                 mySeatStrengthData[i]
                                                     ['strSubjectList'],

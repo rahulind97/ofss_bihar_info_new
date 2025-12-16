@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:ofss_bihar_info/utils/ApiInterceptor.dart';
 
 import '../model/AdmissiondetailModel.dart';
-import '../model/GetSlideupContentModel.dart';
 import '../model/applyForSlideUpModel.dart';
 import '../model/changePasswordModel.dart';
 import '../model/collegeInfoModel.dart';
@@ -11,48 +12,30 @@ import '../model/feedbackModel.dart';
 import '../model/forgotModel.dart';
 import '../model/getOtpModel.dart';
 import '../model/loginModel.dart';
-import '../model/modify_version_model.dart';
 import '../model/otpModel.dart';
 import '../model/resendOtpModel.dart';
 import '../model/slideUpStatusModel.dart';
 import '../model/user_info_model.dart';
 
-//String URL ="http://192.168.201.123/epassService/MobileService.svc/";//local url
 
-//String URL ="http://192.168.201.247/OFSS_Service/OFSS_MobilityService.svc/";//local url
-
-//String URL ="http://164.164.122.177/ofss_Service/OFSS_MobilityService.svc/"; //staging Url
-
-// this.MOFCUrl = 'http://service.ofssbihar.in/OFSS_MobilityService.svc/';  //Live Url SAMS
-
-// this.MOFCUrl = 'http://192.168.201.208/SAMS_Service/OFSS_MobilityService.svc/'; //ritiki Url
-
-// this.MOFCUrl = 'http://164.164.122.177/ofss_Service/OFSS_MobilityService.svc/'; //staging Url
-
-//String URL = 'http://service.ofssbihar.in/OFSS_MobilityService.svc/'; //live Url
-
-// String URL = 'http://service.ofssbihar.org/OFSS_MobilityService.svc/'; // new live Url 2024
-// String URL = 'http://service.ofssbihar.net/OFSS_MobilityService.svc/'; // new live Url 2025
-// String URL = 'http://ofssbihar.net/OFSS_Service/OFSS_MobilityService.svc/'; // new Stagging Url 2025
-
-//String URL = 'http://ofssbihar.net/Ofss_service/OFSS_MobilityService.svc/'; // new live Url 2025
 String URL = 'http://mobileapp.ofssbihar.net/OFSS_Service/OFSS_MobilityService.svc/'; // new live Url 2025
 
 /*
     ****** This  function is used for Login Data  ******
 */
 
-Future<http.Response> loginServ(Login post) async {
-  print(LoginToJson(post));
+Dio _dio =ApiInterceptor.createDio();
+Future<Response> login(Login login) async {
+  try {
+    final response = await _dio.post(
+      URL+"login",      // endpoint only (BaseURL in dio_client)
+      data: login.toJson(),
+    );
 
-  final response = await http.post(Uri.parse(URL + 'login'),
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-      },
-      body: LoginToJson(post));
-  print(URL + 'login');
-  print("URL + 'login'"+response.toString());
-  return response;
+    return response;
+  } catch (e) {
+    throw Exception("Login API failed: $e");
+  }
 }
 
 /*
