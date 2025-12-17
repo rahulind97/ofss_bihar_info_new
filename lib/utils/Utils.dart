@@ -20,7 +20,21 @@ class Utils {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
+  static Future<void> saveBoolToPrefs(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
 
+  static Future<bool?> getBoolFromPrefs(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+
+  /// Clears all saved SharedPreferences
+  static Future<void> clearPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // clears all keys
+  }
 
   static void showNoInternetDialog(BuildContext context) {
     showDialog(

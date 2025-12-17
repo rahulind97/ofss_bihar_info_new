@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ofss_bihar_info/utils/ApiInterceptor.dart';
 import 'package:ofss_bihar_info/utils/Utils.dart';
 
+import '../constants/constants.dart';
 import '../model/loginModel.dart';
 import '../services/services.dart';
 import '../services/services.dart' as _service;
@@ -22,6 +23,79 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   bool showPassword = false;
+  // API Method
+  Future<void> loginApi() async {
+    print("Mobile: ${mobileController.text}");
+    print("Password: ${passwordController.text}");
+
+    Utils.progressbar(context);
+    Dio dio = ApiInterceptor.createDio();
+    final url = URL + 'login';
+
+    Map<String, dynamic> data = {
+      "mobileNumber": mobileController.text.trim(),
+      "password": passwordController.text.trim(),
+      "type": "2"
+    };
+
+    try {
+      final response = await dio.post(
+        url,
+        data: data,
+        options: Options(
+          headers: {"Content-Type": "application/json"},
+          responseType: ResponseType.json,
+        ),
+      );
+
+      print("RAW RESPONSE: ${response.data}");
+
+      if (response.data is List && response.data.isNotEmpty) {
+        final item = response.data[0];
+
+        if (item["status"] == '200' && item["msg"] == "Success") {
+          final user = item["lstUser"][0];
+          Utils.saveStringToPrefs(constants.APPLICATION_ID, user['applicantId'].toString());
+          Utils.saveStringToPrefs(constants.NAME, user['Name'].toString());
+          Utils.saveStringToPrefs(constants.EMAIL, user['strEmail'].toString());
+          Utils.saveStringToPrefs(constants.USER_NAME, user['username'].toString());
+          Utils.saveStringToPrefs(constants.IMAGE_PATH, user['ImagePath'].toString());
+          Utils.saveStringToPrefs(constants.CAF_NUMBER, user['cafNumber'].toString());
+          Utils.saveBoolToPrefs('isLogin', true);
+          Navigator.pop(context); // CLOSE LOADER FIRST
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Login Successful")),
+          );
+
+          // NAVIGATE TO DASHBOARD
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DashboardScreen(userData: user),
+            ),
+          );
+
+          return;
+        }
+      }
+
+      Navigator.pop(context); // CLOSE LOADER
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Invalid login. Please try again.")),
+      );
+
+    } catch (e) {
+      print("ERROR: $e");
+
+      Navigator.pop(context); // CLOSE LOADER ON ERROR
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Something went wrong!")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -260,71 +334,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // API Method
-  Future<void> loginApi() async {
-    print("Mobile: ${mobileController.text}");
-    print("Password: ${passwordController.text}");
-
-    Utils.progressbar(context);
-    Dio dio = ApiInterceptor.createDio();
-    final url = URL + 'login';
-
-    Map<String, dynamic> data = {
-      "mobileNumber": mobileController.text.trim(),
-      "password": passwordController.text.trim(),
-      "type": "2"
-    };
-
-    try {
-      final response = await dio.post(
-        url,
-        data: data,
-        options: Options(
-          headers: {"Content-Type": "application/json"},
-          responseType: ResponseType.json,
-        ),
-      );
-
-      print("RAW RESPONSE: ${response.data}");
-
-      if (response.data is List && response.data.isNotEmpty) {
-        final item = response.data[0];
-
-        if (item["status"] == '200' && item["msg"] == "Success") {
-          final user = item["lstUser"][0];
-
-          Navigator.pop(context); // CLOSE LOADER FIRST
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Login Successful")),
-          );
-
-          // NAVIGATE TO DASHBOARD
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => DashboardScreen(userData: user),
-            ),
-          );
-
-          return;
-        }
-      }
-
-      Navigator.pop(context); // CLOSE LOADER
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Invalid login. Please try again.")),
-      );
-
-    } catch (e) {
-      print("ERROR: $e");
-
-      Navigator.pop(context); // CLOSE LOADER ON ERROR
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Something went wrong!")),
-      );
-    }
-  }
 }

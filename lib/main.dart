@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:ofss_bihar_info/utils/Utils.dart';
+import 'package:ofss_bihar_info/view_controller/DashBoardScreen.dart';
 import 'package:ofss_bihar_info/view_controller/PreLoginScreen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load login state from SharedPreferences
+  bool isLoggedIn = await Utils.getBoolFromPrefs('isLogin') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
 
-  // This widget is the root of your application.
+  const MyApp({super.key, required this.isLoggedIn});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +24,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const PreLoginScreen(),
+      home: isLoggedIn
+          ? const DashboardScreen(userData: {})
+          : const PreLoginScreen(),
+
     );
   }
 }
