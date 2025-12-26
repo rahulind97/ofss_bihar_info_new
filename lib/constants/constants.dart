@@ -5,6 +5,8 @@
   static const String  LOGIN= 'Login';
   static const String  GET_PROFILE= 'getProfileData';
   static const String  FEEDBACK= 'feedback';
+  static const String  FORGOT_PASSWORD= 'forgotPassword';
+  static const String  VERIFY_OTP= 'VerifyChangePasswordOTP';
 
 
   //  SHARE_PREFERENCE

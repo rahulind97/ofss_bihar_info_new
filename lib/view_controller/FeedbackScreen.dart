@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:ofss_bihar_info/constants/Colors.dart';
 import 'package:ofss_bihar_info/utils/ApiInterceptor.dart';
 
 import '../constants/constants.dart';
@@ -185,8 +186,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                       onPressed:
                                       isLoading ? null : submitFeedback,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: Colors.black,
+                                        backgroundColor: appBarColor,
+                                        foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10),
                                         ),
