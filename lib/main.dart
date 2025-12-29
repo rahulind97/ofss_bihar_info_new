@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       home: isLoggedIn
           ? const DashboardScreen(userData: {})
           : const PreLoginScreen(),
-
     );
   }
 }
