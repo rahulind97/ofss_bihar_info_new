@@ -35,32 +35,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> loadUserData() async {
-    applicantId =
-        await Utils.getStringFromPrefs(constants.APPLICATION_ID) ??
-            // widget.userData['applicantId']?.toString() ??
-            '';
 
-    name =
-        await Utils.getStringFromPrefs(constants.NAME) ??
-            // widget.userData['Name']?.toString() ??
-            '';
 
-    email =
-        await Utils.getStringFromPrefs(constants.EMAIL) ??
-            // widget.userData['strEmail']?.toString() ??
-            '';
-
-    username =
-        await Utils.getStringFromPrefs(constants.USER_NAME) ??
-            // widget.userData['username']?.toString() ??
-            '';
-
-    imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
-
-    cafNumber =
-        await Utils.getStringFromPrefs(constants.CAF_NUMBER) ??
-            // widget.userData['cafNumber']?.toString() ??
-            '';
+    // name =
+    //     await Utils.getStringFromPrefs(constants.NAME) ??
+    //         // widget.userData['Name']?.toString() ??
+    //         '';
+    //
+    // email =
+    //     await Utils.getStringFromPrefs(constants.EMAIL) ??
+    //         // widget.userData['strEmail']?.toString() ??
+    //         '';
+    //
+    // username =
+    //     await Utils.getStringFromPrefs(constants.USER_NAME) ??
+    //         // widget.userData['username']?.toString() ??
+    //         '';
+    //
+    // imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
+    //
+    // cafNumber =
+    //     await Utils.getStringFromPrefs(constants.CAF_NUMBER) ??
+    //         // widget.userData['cafNumber']?.toString() ??
+    //         '';
 
     isLoading = false;
     setState(() {});

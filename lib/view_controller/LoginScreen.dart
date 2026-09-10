@@ -26,17 +26,17 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
   // API Method
   Future<void> loginApi() async {
-    print("Mobile: ${mobileController.text}");
+    print("LoginId: ${mobileController.text}");
     print("Password: ${passwordController.text}");
 
     Utils.progressbar(context);
     Dio dio = ApiInterceptor.createDio();
-    final url = URL + 'login';
+    final url = URL + 'auth/login';
 
     Map<String, dynamic> data = {
-      "mobileNumber": mobileController.text.trim(),
-      "password": passwordController.text.trim(),
-      "type": "2"
+      "LoginId": mobileController.text.trim(),
+      "Password": passwordController.text.trim(),
+
     };
 
     try {
@@ -50,32 +50,35 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       print("RAW RESPONSE: ${response.data}");
+      print("RAW RESPONSE: 2 ${response.statusCode}");
 
-      if (response.data is List && response.data.isNotEmpty) {
-        final item = response.data[0];
+      if (response.data.isNotEmpty) {
+        //final item = response.data[0];
+        print("trace1");
 
-        if (item["status"] == '200' && item["msg"] == "Success") {
-          final user = item["lstUser"][0];
-          Utils.saveStringToPrefs(constants.APPLICATION_ID, user['applicantId'].toString());
-          Utils.saveStringToPrefs(constants.NAME, user['Name'].toString());
-          Utils.saveStringToPrefs(constants.EMAIL, user['strEmail'].toString());
-          Utils.saveStringToPrefs(constants.USER_NAME, user['username'].toString());
-          Utils.saveStringToPrefs(constants.IMAGE_PATH, user['ImagePath'].toString());
-          Utils.saveStringToPrefs(constants.CAF_NUMBER, user['cafNumber'].toString());
-          Utils.saveBoolToPrefs('isLogin', true);
+
+
+        if (response.data["success"] == true && response.statusCode == 200) {
+          print("trace2");
+           Utils.saveStringToPrefs(constants.TOKEN, response.data['token'].toString());
+           Utils.saveStringToPrefs(constants.REFRANCENO, response.data['applicantDetails']['RefrenceNo'].toString());
+
+
+
+          // Utils.saveBoolToPrefs('isLogin', true);
           Navigator.pop(context); // CLOSE LOADER FIRST
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Login Successful")),
           );
-
-          // NAVIGATE TO DASHBOARD
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => DashboardScreen(userData: user),
-            ),
-          );
+          //
+          // // NAVIGATE TO DASHBOARD
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (_) => DashboardScreen(userData: user),
+          //   ),
+          // );
 
           return;
         }
@@ -312,24 +315,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       const SizedBox(height: 8),
 
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => Forgetpasswordscreen(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          "Forgot Password ?",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (_) => Forgetpasswordscreen(),
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: const Text(
+                      //     "Forgot Password ?",
+                      //     style: TextStyle(
+                      //       color: Colors.black87,
+                      //       fontSize: 13.5,
+                      //       fontWeight: FontWeight.w500,
+                      //     ),
+                      //   ),
+                      // ),
 
                       const SizedBox(height: 5),
                     ],

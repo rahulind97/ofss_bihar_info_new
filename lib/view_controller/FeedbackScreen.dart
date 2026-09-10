@@ -34,9 +34,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   /// 🔹 Load saved user data from SharedPreferences
   Future<void> _loadUserData() async {
-    nameController.text = await Utils.getStringFromPrefs(constants.CAF_NUMBER) ?? '';
-    mobileController.text = await Utils.getStringFromPrefs(constants.USER_NAME) ?? '';
-    emailController.text = await Utils.getStringFromPrefs(constants.EMAIL) ?? '';
+    // nameController.text = await Utils.getStringFromPrefs(constants.CAF_NUMBER) ?? '';
+    // mobileController.text = await Utils.getStringFromPrefs(constants.USER_NAME) ?? '';
+    // emailController.text = await Utils.getStringFromPrefs(constants.EMAIL) ?? '';
   }
 
   /// 🔹 Submit Feedback API

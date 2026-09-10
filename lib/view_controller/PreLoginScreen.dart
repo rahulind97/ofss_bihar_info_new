@@ -120,49 +120,49 @@ class _PreLoginScreenState extends State<PreLoginScreen> {
             ),
           ),
 
-          // Bottom Bar - College Information
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.0),
-                        topRight: Radius.circular(20.0),
-                      )),
-                  builder: (_) => Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: CollegeInfo(),
-                  ),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                color: btnColor,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.info, color: Colors.white, size: 30),
-                    SizedBox(width: 12),
-                    Text(
-                      "College Information",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+          // // Bottom Bar - College Information
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: InkWell(
+          //     onTap: () {
+          //       showModalBottomSheet(
+          //         isScrollControlled: true,
+          //         context: context,
+          //         shape: const RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.only(
+          //               topLeft: Radius.circular(20.0),
+          //               topRight: Radius.circular(20.0),
+          //             )),
+          //         builder: (_) => Padding(
+          //           padding: EdgeInsets.only(
+          //               bottom: MediaQuery.of(context).viewInsets.bottom),
+          //           child: CollegeInfo(),
+          //         ),
+          //       );
+          //     },
+          //     child: Container(
+          //       padding: const EdgeInsets.symmetric(vertical: 14),
+          //       color: btnColor,
+          //       child: const Row(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: [
+          //           Icon(Icons.info, color: Colors.white, size: 30),
+          //           SizedBox(width: 12),
+          //           Text(
+          //             "College Information",
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //               fontSize: 18,
+          //               fontWeight: FontWeight.w600,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
