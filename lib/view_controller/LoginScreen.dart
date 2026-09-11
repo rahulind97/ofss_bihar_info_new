@@ -61,7 +61,25 @@ class _LoginScreenState extends State<LoginScreen> {
         if (response.data["success"] == true && response.statusCode == 200) {
           print("trace2");
            Utils.saveStringToPrefs(constants.TOKEN, response.data['token'].toString());
-           Utils.saveStringToPrefs(constants.REFRANCENO, response.data['applicantDetails']['RefrenceNo'].toString());
+           Utils.saveStringToPrefs(constants.REFRANCENO, response.data['applicantDetails'][constants.REFRANCENO].toString());
+           Utils.saveStringToPrefs(constants.IMAGE_PATH, response.data['applicantDetails'][constants.IMAGE_PATH].toString());
+           Utils.saveStringToPrefs(constants.APPLICATION_ID, response.data['applicantDetails'][constants.APPLICATION_ID].toString());
+           Utils.saveStringToPrefs(constants.MOBILE_NO, response.data['applicantDetails'][constants.MOBILE_NO].toString());
+           Utils.saveStringToPrefs(constants.EMAIL_ID, response.data['applicantDetails'][constants.EMAIL_ID].toString());
+           Utils.saveStringToPrefs(constants.BOARD_NAME, response.data['applicantDetails'][constants.BOARD_NAME].toString());
+           Utils.saveStringToPrefs(constants.YEAR_OF_PASSING, response.data['applicantDetails'][constants.YEAR_OF_PASSING].toString());
+           Utils.saveStringToPrefs(constants.EXAM_TYPE, response.data['applicantDetails'][constants.EXAM_TYPE].toString());
+           Utils.saveStringToPrefs(constants.DOB, response.data['applicantDetails'][constants.DOB].toString());
+           Utils.saveStringToPrefs(constants.ROLL_NO, response.data['applicantDetails'][constants.ROLL_NO].toString());
+           Utils.saveStringToPrefs(constants.ROLL_CODE, response.data['applicantDetails'][constants.ROLL_CODE].toString());
+           Utils.saveStringToPrefs(constants.NAME, response.data['applicantDetails'][constants.NAME].toString());
+           Utils.saveStringToPrefs(constants.FATHER_NAME, response.data['applicantDetails'][constants.FATHER_NAME].toString());
+           Utils.saveStringToPrefs(constants.MOTHER_NAME, response.data['applicantDetails'][constants.MOTHER_NAME].toString());
+           Utils.saveStringToPrefs(constants.GENDER, response.data['applicantDetails'][constants.GENDER].toString());
+           Utils.saveStringToPrefs(constants.MT_NAME, response.data['applicantDetails'][constants.MT_NAME].toString());
+           Utils.saveStringToPrefs(constants.NATIONALITY, response.data['applicantDetails'][constants.NATIONALITY].toString());
+           Utils.saveStringToPrefs(constants.BG_NAME, response.data['applicantDetails'][constants.BG_NAME].toString());
+           Utils.saveStringToPrefs(constants.ADHAAAR_NO, response.data['applicantDetails'][constants.ADHAAAR_NO].toString());
 
 
 
@@ -72,13 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
             SnackBar(content: Text("Login Successful")),
           );
           //
-          // // NAVIGATE TO DASHBOARD
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (_) => DashboardScreen(userData: user),
-          //   ),
-          // );
+          // NAVIGATE TO DASHBOARD
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DashboardScreen(),
+            ),
+          );
 
           return;
         }

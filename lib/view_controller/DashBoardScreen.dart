@@ -8,9 +8,6 @@ import 'CollegeInformation.dart';
 import 'ProfileScreen.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final Map userData;
-
-  const DashboardScreen({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -37,27 +34,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> loadUserData() async {
 
 
-    // name =
-    //     await Utils.getStringFromPrefs(constants.NAME) ??
-    //         // widget.userData['Name']?.toString() ??
-    //         '';
-    //
-    // email =
-    //     await Utils.getStringFromPrefs(constants.EMAIL) ??
-    //         // widget.userData['strEmail']?.toString() ??
-    //         '';
-    //
-    // username =
-    //     await Utils.getStringFromPrefs(constants.USER_NAME) ??
-    //         // widget.userData['username']?.toString() ??
-    //         '';
-    //
-    // imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
-    //
-    // cafNumber =
-    //     await Utils.getStringFromPrefs(constants.CAF_NUMBER) ??
-    //         // widget.userData['cafNumber']?.toString() ??
-    //         '';
+    name =
+        await Utils.getStringFromPrefs(constants.NAME) ??
+            // widget.userData['Name']?.toString() ??
+            '';
+
+    email =
+        await Utils.getStringFromPrefs(constants.EMAIL_ID) ??
+            // widget.userData['strEmail']?.toString() ??
+            '';
+
+    username =
+        await Utils.getStringFromPrefs(constants.NAME) ??
+            // widget.userData['username']?.toString() ??
+            '';
+
+    imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
+
+    cafNumber =
+        await Utils.getStringFromPrefs(constants.ROLL_NO) ??
+            // widget.userData['cafNumber']?.toString() ??
+            '';
+    imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
+
 
     isLoading = false;
     setState(() {});
@@ -167,11 +166,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
 
-          _drawerItem(
-            Icons.info,
-            'College Information',
-                () => _openCollegeInfo(context),
-          ),
+          // _drawerItem(
+          //   Icons.info,
+          //   'College Information',
+          //       () => _openCollegeInfo(context),
+          // ),
 
           _drawerItem(Icons.person, 'My Info', () {
             Navigator.push(
@@ -183,19 +182,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           }),
 
-          _drawerItem(Icons.details, 'Admission Details', () {}),
+        //  _drawerItem(Icons.details, 'Admission Details', () {}),
 
-          _drawerItem(Icons.settings, 'Slide Up Selection', () {}),
+        //  _drawerItem(Icons.settings, 'Slide Up Selection', () {}),
 
-          _drawerItem(Icons.feedback, 'Feedback', () {
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => FeedbackScreen()),
-            );
-
-          }),
+          // _drawerItem(Icons.feedback, 'Feedback', () {
+          //
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (_) => FeedbackScreen()),
+          //   );
+          //
+          // }),
 
           _drawerItem(Icons.info, 'App Version', () {
             Navigator.push(
@@ -295,28 +294,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
 
             // Bottom Button
-            InkWell(
-              onTap: () => _openCollegeInfo(context),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                width: double.infinity,
-                color: btnColor,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.info, color: Colors.white, size: 30),
-                    SizedBox(width: 10),
-                    Text(
-                      "College Information",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () => _openCollegeInfo(context),
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(vertical: 14),
+            //     width: double.infinity,
+            //     color: btnColor,
+            //     child: const Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Icon(Icons.info, color: Colors.white, size: 30),
+            //         SizedBox(width: 10),
+            //         Text(
+            //           "College Information",
+            //           style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.w600),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

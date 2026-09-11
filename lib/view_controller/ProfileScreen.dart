@@ -24,42 +24,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    fetchProfile();
+  //  fetchProfile();
   }
 
-  Future<void> fetchProfile() async {
-    try {
-      Dio dio = ApiInterceptor.createDio();
-      final response = await dio.post(
-        '${constants.BASE_URL}${constants.GET_PROFILE}',
-        options: Options(headers: {'Content-Type': 'application/json'}),
-        data: {
-          "strCafNo": widget.cafNo,
-          "type": "2"
-        },
-      );
+  // Future<void> fetchProfile() async {
+  //   try {
+  //     Dio dio = ApiInterceptor.createDio();
+  //     final response = await dio.post(
+  //       '${constants.BASE_URL}${constants.GET_PROFILE}',
+  //       options: Options(headers: {'Content-Type': 'application/json'}),
+  //       data: {
+  //         "strCafNo": widget.cafNo,
+  //         "type": "2"
+  //       },
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       setState(() {
+  //         profileData = response.data ?? {};
+  //         loading = false;
+  //       });
+  //       print("Profile Data: $profileData");
+  //     } else {
+  //       setState(() => loading = false);
+  //       _showError("Failed: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     setState(() => loading = false);
+  //     _showError(e.toString());
+  //   }
+  // }
 
-      if (response.statusCode == 200) {
-        setState(() {
-          profileData = response.data ?? {};
-          loading = false;
-        });
-        print("Profile Data: $profileData");
-      } else {
-        setState(() => loading = false);
-        _showError("Failed: ${response.statusCode}");
-      }
-    } catch (e) {
-      setState(() => loading = false);
-      _showError(e.toString());
-    }
-  }
-
-  void _showError(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg)),
-    );
-  }
+  // void _showError(String msg) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text(msg)),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +72,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             _header(profileData),
             const SizedBox(height: 14),
-            _marksCard(profileData),
+          //  _marksCard(profileData),
             const SizedBox(height: 14),
             _personalInfoCard(profileData),
             const SizedBox(height: 14),
-            _paymentStatusCard(profileData),
+            // _paymentStatusCard(profileData),
             const SizedBox(height: 20),
           ],
         ),
@@ -130,35 +130,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // ================= MARKS =================
-  Widget _marksCard(Map<String, dynamic> data) {
-    return _card(
-      title: "Marks",
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _markItem("Full Marks", data['markDetail']['fullMark']?.toString() ?? ""),
-          _markItem("Obtained Marks", data['markDetail']['obtainedMark']?.toString() ?? ""),
-        ],
-      ),
-    );
-  }
+  // Widget _marksCard(Map<String, dynamic> data) {
+  //   return _card(
+  //     title: "Marks",
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //       children: [
+  //         _markItem("Full Marks", data['markDetail']['fullMark']?.toString() ?? ""),
+  //         _markItem("Obtained Marks", data['markDetail']['obtainedMark']?.toString() ?? ""),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _markItem(String label, String value) {
-    return Column(
-      children: [
-        Text(label, style: const TextStyle(fontSize: 13)),
-        const SizedBox(height: 6),
-        Text(
-          value,
-          style: const TextStyle(
-            color: red,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _markItem(String label, String value) {
+  //   return Column(
+  //     children: [
+  //       Text(label, style: const TextStyle(fontSize: 13)),
+  //       const SizedBox(height: 6),
+  //       Text(
+  //         value,
+  //         style: const TextStyle(
+  //           color: red,
+  //           fontSize: 22,
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // ================= PERSONAL INFO =================
   Widget _personalInfoCard(Map<String, dynamic> data) {

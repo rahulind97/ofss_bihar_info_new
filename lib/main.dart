@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: isLoggedIn
-          ? const DashboardScreen(userData: {})
-          : const PreLoginScreen(),
+          ? DashboardScreen()
+          :  PreLoginScreen(),
     );
   }
 }
