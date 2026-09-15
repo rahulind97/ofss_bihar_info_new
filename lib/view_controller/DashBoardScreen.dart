@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ofss_bihar_info/view_controller/AppVersionScreen.dart';
+import 'package:ofss_bihar_info/view_controller/CafPrintiScreen.dart';
 import 'package:ofss_bihar_info/view_controller/FeedbackScreen.dart';
 import '../constants/Colors.dart';
 import '../constants/constants.dart';
@@ -22,6 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String username = '';
   String cafNumber = '';
   String? imagePath;
+  String? token;
 
   bool isLoading = true;
 
@@ -50,13 +52,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             '';
 
     imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
+    token = await Utils.getStringFromPrefs(constants.TOKEN);
 
     cafNumber =
-        await Utils.getStringFromPrefs(constants.ROLL_NO) ??
+        await Utils.getStringFromPrefs(constants.REFRANCENO) ??
             // widget.userData['cafNumber']?.toString() ??
             '';
-    imagePath = await Utils.getStringFromPrefs(constants.IMAGE_PATH);
-
 
     isLoading = false;
     setState(() {});
@@ -180,9 +181,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             );
 
-          }),
+          }
+          ),
 
-        //  _drawerItem(Icons.details, 'Admission Details', () {}),
+          _drawerItem(Icons.format_align_justify, 'CAF', () {
+
+            print("object1323");
+            print(token!);
+
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => CafPrintScreen(token:token!)),
+                ) ;
+
+          }),
 
         //  _drawerItem(Icons.settings, 'Slide Up Selection', () {}),
 

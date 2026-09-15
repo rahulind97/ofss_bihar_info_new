@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:ofss_bihar_info/constants/Colors.dart';
 import 'package:ofss_bihar_info/constants/constants.dart';
 import 'package:ofss_bihar_info/utils/ApiInterceptor.dart';
-
+import 'package:ofss_bihar_info/utils/Utils.dart';
+import 'package:intl/intl.dart';
 class ProfileScreen extends StatefulWidget {
   final String cafNo;
 
@@ -19,47 +22,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
   static const Color red = textColor;
 
   Map<String, dynamic> profileData = {};
-  bool loading = true;
+  bool loading = false;
+
+  String  IMAGE_PATH= '';
+  String  APPLICATION_ID= '';
+  String  MOBILE_NO= '';
+  String  EMAIL_ID= '';
+  String  BOARD_NAME= '';
+  String  YEAR_OF_PASSING= '';
+  String  EXAM_TYPE= '';
+  String  ROLL_NO= '';
+  String  DOB= '';
+  String  ROLL_CODE= '';
+  String  NAME= '';
+  String  FATHER_NAME= '';
+  String  MOTHER_NAME= '';
+  String  GENDER= '';
+  String  MT_NAME= '';
+  String  NATIONALITY= '';
+  String  BG_NAME= '';
+  String  ADHAAAR_NO= '';
+
+
 
   @override
   void initState() {
     super.initState();
-  //  fetchProfile();
+    loadData();
   }
 
-  // Future<void> fetchProfile() async {
-  //   try {
-  //     Dio dio = ApiInterceptor.createDio();
-  //     final response = await dio.post(
-  //       '${constants.BASE_URL}${constants.GET_PROFILE}',
-  //       options: Options(headers: {'Content-Type': 'application/json'}),
-  //       data: {
-  //         "strCafNo": widget.cafNo,
-  //         "type": "2"
-  //       },
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       setState(() {
-  //         profileData = response.data ?? {};
-  //         loading = false;
-  //       });
-  //       print("Profile Data: $profileData");
-  //     } else {
-  //       setState(() => loading = false);
-  //       _showError("Failed: ${response.statusCode}");
-  //     }
-  //   } catch (e) {
-  //     setState(() => loading = false);
-  //     _showError(e.toString());
-  //   }
-  // }
+   void loadData() async {
 
-  // void _showError(String msg) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(content: Text(msg)),
-  //   );
-  // }
+     IMAGE_PATH = (await Utils.getStringFromPrefs(constants.IMAGE_PATH))!;
+     MOBILE_NO = (await Utils.getStringFromPrefs(constants.MOBILE_NO))!;
+     EMAIL_ID = (await Utils.getStringFromPrefs(constants.EMAIL_ID))!;
+     BOARD_NAME = (await Utils.getStringFromPrefs(constants.BOARD_NAME))!;
+     YEAR_OF_PASSING = (await Utils.getStringFromPrefs(constants.YEAR_OF_PASSING))!;
+     ROLL_NO = (await Utils.getStringFromPrefs(constants.ROLL_NO))!;
+     DOB = (await Utils.getStringFromPrefs(constants.DOB))!;
+     ROLL_CODE = (await Utils.getStringFromPrefs(constants.ROLL_CODE))!;
+     NAME = (await Utils.getStringFromPrefs(constants.NAME))!;
+     FATHER_NAME = (await Utils.getStringFromPrefs(constants.FATHER_NAME))!;
+     MOTHER_NAME = (await Utils.getStringFromPrefs(constants.MOTHER_NAME))!;
+     GENDER = (await Utils.getStringFromPrefs(constants.GENDER))!;
+     NATIONALITY = (await Utils.getStringFromPrefs(constants.NATIONALITY))!;
+     ADHAAAR_NO = (await Utils.getStringFromPrefs(constants.ADHAAAR_NO))!;
+     setState(() {
+
+     });
+   }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 14),
             _personalInfoCard(profileData),
             const SizedBox(height: 14),
-            // _paymentStatusCard(profileData),
+            //_paymentStatusCard(profileData),
             const SizedBox(height: 20),
           ],
         ),
@@ -102,12 +119,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           CircleAvatar(
             radius: 38,
             backgroundImage: NetworkImage(
-              widget.imagePath ?? "https://i.pravatar.cc/150?img=47",
+              IMAGE_PATH ?? "https://i.pravatar.cc/150?img=47",
             ),
           ),
           const SizedBox(height: 10),
           Text(
-            data['personalInformation']['name'] ?? "",
+            NAME ?? "",
             style: const TextStyle(
               color: Colors.white,
               fontSize: 17,
@@ -116,12 +133,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            data['personalInformation']['mob'] ?? "",
+            MOBILE_NO ?? "",
             style: const TextStyle(color: Colors.white70, fontSize: 13),
           ),
           const SizedBox(height: 2),
           Text(
-            data['personalInformation']['email'] ?? "",
+            EMAIL_ID ?? "",
             style: const TextStyle(color: Colors.white70, fontSize: 13),
           ),
         ],
@@ -167,27 +184,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           // _row(
-            _infoBox(Icons.person, "Father Name", data['personalInformation']['fatherName'] ?? ""),
+            _infoBox(Icons.person, "Father Name", FATHER_NAME ?? ""),
           const SizedBox(height: 14),
-          _infoBox(Icons.person, "Mother Name", data['personalInformation']['motherName'] ?? ""),
+          _infoBox(Icons.person, "Mother Name", MOTHER_NAME ?? ""),
           const SizedBox(height: 14),
 
           // ),
           _row(
             _infoBox(Icons.numbers, "CAF No",widget.cafNo.toString() ?? ""),
-            _infoBox(Icons.calendar_today, "Date of Birth", data['personalInformation']['dob'].toString() ?? ""),
+            _infoBox(Icons.calendar_today, "Date of Birth",    DateFormat('dd/MM/yyyy').format(DateTime.parse(DOB)).toString() ?? ""),
+          ),
+          _rowSingle(
+            _infoBox(Icons.people, "Gender", GENDER.toString() ?? ""),
+        //    _infoBox(Icons.group, "Cast", data['personalInformation']['cast_name'].toString() ?? ""),
           ),
           _row(
-            _infoBox(Icons.people, "Gender", data['personalInformation']['gender'].toString() ?? ""),
-            _infoBox(Icons.group, "Cast", data['personalInformation']['cast_name'].toString() ?? ""),
+            _infoBox(Icons.school, "Board", BOARD_NAME.toString() ?? ""),
+            _infoBox(Icons.confirmation_number, "Roll No", ROLL_NO.toString() ?? ""),
           ),
-          _row(
-            _infoBox(Icons.school, "Board", data['personalInformation']['board'].toString() ?? ""),
-            _infoBox(Icons.confirmation_number, "Roll No", data['personalInformation']['rollno'].toString() ?? ""),
-          ),
-          _row(
-            _infoBox(Icons.history, "Year of Passing", data['personalInformation']['yop'].toString() ?? ""),
-            _infoBox(Icons.calendar_month, "Applied Date", data['personalInformation']['strAppliedDate'].toString() ?? ""),
+          _rowSingle(
+            _infoBox(Icons.history, "Year of Passing", YEAR_OF_PASSING.toString() ?? ""),
+          //  _infoBox(Icons.calendar_month, "Applied Date", data['personalInformation']['strAppliedDate'].toString() ?? ""),
           ),
         ],
       ),
@@ -264,6 +281,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  Widget _rowSingle(Widget left) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Expanded(child: left),
+        //  const SizedBox(width: 12),
+
+        ],
+      ),
+    );
+  }
+
 
   Widget _infoBox(IconData icon, String label, String value, {bool success = false}) {
     return Column(
